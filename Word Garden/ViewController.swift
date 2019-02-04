@@ -14,13 +14,13 @@ class ViewController: UIViewController {
     @IBOutlet weak var guessedLetterField: UITextField!
     @IBOutlet weak var guessLetterButton: UIButton!
     @IBOutlet weak var guessCountLabel: UILabel!
-    @IBOutlet weak var playAgainLabel: UIButton!
+    @IBOutlet weak var playAgainButton: UIButton!
     @IBOutlet weak var flowerImageView: UIImageView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("In viewDidLoad, is guessedLetterField the first responder?",
-            guessedLetterField.isFirstResponder)
+        guessLetterButton.isEnabled = false
+        playAgainButton.isHidden = true
     }
     
     func updateUIAfterGuess(){
@@ -29,23 +29,21 @@ class ViewController: UIViewController {
     }
     
     @IBAction func guessedLetterFieldChanged(_ sender: UITextField) {
-        print("Hey! The guessedLetterFieldChanged!")
+        if let letterGuessed = guessedLetterField.text?.last{
+            guessedLetterField.text = "\(letterGuessed)"
+            guessLetterButton.isEnabled = true
+        } else{
+            //disable the button if don't have a single character in the textfield
+            guessLetterButton.isEnabled = false
+        }
     }
     
     @IBAction func doneKeyPressed(_ sender: UITextField) {
-        print("In doneKeyPressed, is guessedLetterField the first responder before updataUIAfterGuess?",
-              guessedLetterField.isFirstResponder)
         updateUIAfterGuess()
-        print("In doneKeyPressed, is guessedLetterField the first responder after updataUIAfterGuess?",
-              guessedLetterField.isFirstResponder)
     }
     
     @IBAction func guessButtonPressed(_ sender: UIButton) {
-        print("In guessButtonPressed, is guessedLetterField the first responder before updataUIAfterGuess?",
-              guessedLetterField.isFirstResponder)
         updateUIAfterGuess()
-        print("In guessButtonPressed, is guessedLetterField the first responder after updataUIAfterGuess?",
-              guessedLetterField.isFirstResponder)
     }
     
     @IBAction func playAgainButtonPressed(_ sender: UIButton) {
